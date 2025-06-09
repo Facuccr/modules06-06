@@ -2,13 +2,15 @@ const express = require("express");
 const app = express();
 const PORT = 3000;
 
-const characters = require("./database");
+const characters = require("../express-servidor/database");
 
+// devolvemos los pj (en json) dentro de un objeto llamado items
 app.get("/api/characters", (req, res) => {
   res.setHeader("Content-Type", "application/json");
   res.json({ items: characters });
 });
 
+//devuelve los pjs por id, si el id es incorrecto arroja error
 app.get("/api/characters/:id", (req, res) => {
   const { id } = req.params;
 
@@ -34,6 +36,7 @@ app.get("/api/characters/:id", (req, res) => {
   res.json(character);
 });
 
+// error 404 si la ruta no existe
 app.use((req, res) => {
   res.status(404).json({
     message: "No such file or directory'",
